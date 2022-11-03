@@ -78,9 +78,26 @@ public class CameraMovementControl : MonoBehaviour
     private void Move()
     {
         float heightSpeed = cam.orthographic ? cam.orthographicSize/3 : Mathf.Log(cam.fieldOfView);
-        float sideDt = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime * heightSpeed;
-        float forwardDt = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime * heightSpeed;
+        float forwardDt = 0;
+        float sideDt = 0;
 
+        if (Input.GetKey(KeyCode.W))
+        {
+            forwardDt = moveSpeed * Time.deltaTime * heightSpeed;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            forwardDt = -moveSpeed * Time.deltaTime * heightSpeed;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            sideDt = -moveSpeed * Time.deltaTime * heightSpeed;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            sideDt = moveSpeed * Time.deltaTime * heightSpeed;
+        }
+        
         if (sideDt == 0 && forwardDt == 0)
         {
             return;

@@ -32,7 +32,7 @@ public class UnitSpawner : MonoBehaviour
 
     private void Awake()
     {
-        m_Terrain = Terrain.activeTerrain;//GameObject.FindGameObjectWithTag("Terrain").GetComponent<TerrainCollider>();
+        m_Terrain = Terrain.activeTerrain;
         m_Bounds = m_Terrain.GetComponent<TerrainCollider>().bounds;
         m_PlayerUnitSpawnAttributes = new UnitSpawnAttributes {
             SpawnPoint = GetRandSpawnPoint(),

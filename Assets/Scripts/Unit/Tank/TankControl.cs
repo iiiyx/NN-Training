@@ -58,4 +58,38 @@ public class TankControl : UnitControl
             m_TurretIsReset = true;
         }
     }
+
+    public void Move()
+    {
+        transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, m_MoveSpeed * Time.deltaTime);
+        //m_Rigidbody.AddForce(transform.forward * m_MoveSpeed);
+        //m_Rigidbody.velocity = transform.forward * m_MoveSpeed;
+    }
+
+    public void Stop()
+    {
+        transform.position = Vector3.Lerp(transform.position, transform.position - transform.forward, m_MoveSpeed * Time.deltaTime);
+    }
+
+    public void TurnChasisRight()
+    {
+        //Rotate the sprite about the Y axis in the positive direction
+        transform.Rotate(Vector3.up * Time.deltaTime * m_TurnSpeed, Space.World);
+    }
+
+    public void TurnChasisLeft()
+    {
+        //Rotate the sprite about the Y axis in the positive direction
+        transform.Rotate(Vector3.up * Time.deltaTime * -m_TurnSpeed, Space.World);
+    }
+
+    public void TurnTurretRight()
+    {
+        m_TurretTransform.Rotate(Vector3.up * Time.deltaTime * m_TurnSpeed, Space.World);
+    }
+
+    public void TurnTurretLeft()
+    {
+        m_TurretTransform.Rotate(Vector3.up * Time.deltaTime * -m_TurnSpeed, Space.World);
+    }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class UnitControl : MonoBehaviour, IControlable
+public abstract class UnitControl : MonoBehaviour
 {
     protected abstract void SetLookRotation(Vector3 targetPosition);
     protected abstract void UpdateLookRotation();
@@ -29,6 +29,7 @@ public abstract class UnitControl : MonoBehaviour, IControlable
     private WaitForSeconds m_WaitForReloading;
     private Vector3 m_LastKnownTargetPosition;
     private Vector3 m_LastPosition;
+    protected Rigidbody m_Rigidbody;
     private Vector3 m_MovePosition;
     private bool m_LastCmdIsMove = true;
     private bool m_IsMoving;
@@ -60,6 +61,8 @@ public abstract class UnitControl : MonoBehaviour, IControlable
     private void Start()
     {
         m_LastPosition = transform.position;
+        //Fetch the Rigidbody component you attach from your GameObject
+        m_Rigidbody = GetComponent<Rigidbody>();
     }
 
     public void MoveTo(Vector3 targetPos, float magnitude)
@@ -176,7 +179,7 @@ public abstract class UnitControl : MonoBehaviour, IControlable
         m_FireTransform.LookAt(m_TargetCollider.bounds.center);
         // Instantiate and launch the shell.
         Shell shell = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation);
-        shell.Fire(m_TargetTransform, m_TargetCollider, m_TargetManager, m_ShellSpeed0);
+        shell.Fire(/*m_TargetTransform, m_TargetCollider, m_TargetManager,*/ m_ShellSpeed0, gameObject);
         //LaunchShell(shell.transform, m_FireTransform);
 
         m_ShootingAudio.Play();
@@ -201,7 +204,7 @@ public abstract class UnitControl : MonoBehaviour, IControlable
         m_StoppingDistance = 4f;
     }
 
-    private void Update()
+    private void Update1()
     {
         if (m_IsMoving)
         {
@@ -216,7 +219,7 @@ public abstract class UnitControl : MonoBehaviour, IControlable
         }
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate1()
     {
         bool isMoved = (transform.position - m_LastPosition).magnitude > 0.1f;
         if (isMoved)
@@ -367,4 +370,7 @@ public abstract class UnitControl : MonoBehaviour, IControlable
         //    m_NavAgent.isStopped = false;
         //}
     }
+
+
+    
 }

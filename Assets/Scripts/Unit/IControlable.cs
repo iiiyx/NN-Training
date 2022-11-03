@@ -4,6 +4,15 @@ using UnityEngine;
 
 public interface IControlable
 {
-    void MoveTo(Vector3 targetPos, float magnitude);
-    void Attack(Transform targetTransform);
+    void Move();
+    
+    void TurnChasisRight();
+    void TurnChasisLeft();
+
+    void TurnTurretRight();
+    void TurnTurretLeft();
+
+    void Fire();
+
+
 }

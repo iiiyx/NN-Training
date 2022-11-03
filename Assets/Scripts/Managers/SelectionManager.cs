@@ -57,82 +57,82 @@ public class SelectionManager : MonoBehaviour
             m_IsDragging = true;
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (!IsBigEnoughRect())
-            {
-                m_IsDragging = false;
-            }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    if (!IsBigEnoughRect())
+        //    {
+        //        m_IsDragging = false;
+        //    }
 
-            if (m_IsDragging)
-            {
-                HandleDragging(withShiftKey, withAltKey);
-                return;
-            }
+        //    if (m_IsDragging)
+        //    {
+        //        HandleDragging(withShiftKey, withAltKey);
+        //        return;
+        //    }
 
-            if (m_MouseSingleClickTimer.Enabled == false)
-            {
-                // ... timer start
-                m_MouseSingleClickTimer.Start();
-                m_ClickMousePosition = Input.mousePosition;
-                m_ClickedWithShift = withShiftKey;
-                m_ClickedWithAlt = withAltKey;
-                HandleSignleClick();
-                // ... wait for double click...
-            }
-            else
-            {
-                //Doubleclick performed - Cancel single click
-                m_MouseSingleClickTimer.Stop();
+        //    if (m_MouseSingleClickTimer.Enabled == false)
+        //    {
+        //        // ... timer start
+        //        m_MouseSingleClickTimer.Start();
+        //        m_ClickMousePosition = Input.mousePosition;
+        //        m_ClickedWithShift = withShiftKey;
+        //        m_ClickedWithAlt = withAltKey;
+        //        HandleSignleClick();
+        //        // ... wait for double click...
+        //    }
+        //    else
+        //    {
+        //        //Doubleclick performed - Cancel single click
+        //        m_MouseSingleClickTimer.Stop();
 
-                //Do your stuff here for double click...
-                HandleDoubleClick(Input.mousePosition, withShiftKey, withAltKey);
-            }
-        }
+        //        //Do your stuff here for double click...
+        //        HandleDoubleClick(Input.mousePosition, withShiftKey, withAltKey);
+        //    }
+        //}
 
-        if (Input.GetMouseButtonUp(1) && m_SelectedUnits.Count > 0)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, m_RaycastLayers))
-            {
-                if (hit.transform.gameObject.layer == 11) // enemy
-                {
-                    Attack(hit.transform);
-                }
-                //else if (hit.transform.gameObject.layer == 8) // ground
-                //{
-                //    ///
-                //}
-                else
-                {
-                    MoveUnits(hit.point);
-                }
-            }
-        }
+        //if (Input.GetMouseButtonUp(1) && m_SelectedUnits.Count > 0)
+        //{
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    if (Physics.Raycast(ray, out RaycastHit hit, 1000f, m_RaycastLayers))
+        //    {
+        //        if (hit.transform.gameObject.layer == 11) // enemy
+        //        {
+        //            Attack(hit.transform);
+        //        }
+        //        //else if (hit.transform.gameObject.layer == 8) // ground
+        //        //{
+        //        //    ///
+        //        //}
+        //        else
+        //        {
+        //            MoveUnits(hit.point);
+        //        }
+        //    }
+        //}
     }
 
-    private void Attack(Transform hitTransform)
-    {
-        foreach (Transform unit in m_SelectedUnits)
-        {
-            UnitManager pUnit = unit.gameObject.GetComponent<UnitManager>();
-            pUnit.Attack(hitTransform);
-        }
-    }
+    //private void Attack(Transform hitTransform)
+    //{
+    //    foreach (Transform unit in m_SelectedUnits)
+    //    {
+    //        UnitManager pUnit = unit.gameObject.GetComponent<UnitManager>();
+    //        pUnit.Attack(hitTransform);
+    //    }
+    //}
 
-    private void MoveUnits(Vector3 hitPos)
-    {
-        Vector3 targetPos = new Vector3(hitPos.x, 0f, hitPos.z);
+    //private void MoveUnits(Vector3 hitPos)
+    //{
+    //    Vector3 targetPos = new Vector3(hitPos.x, 0f, hitPos.z);
 
-        //GetPointsForSquad(targetPos, out Vector3 shift, out List<Vector3> points);
-        //int count = 0;
-        foreach (Transform unit in m_SelectedUnits)
-        {
-            UnitManager pUnit = unit.gameObject.GetComponent<UnitManager>();
-            //pUnit.MoveTo(points[count++], shift.magnitude);
-            pUnit.MoveTo(hitPos, 0f);
-        }
-    }
+    //    //GetPointsForSquad(targetPos, out Vector3 shift, out List<Vector3> points);
+    //    //int count = 0;
+    //    foreach (Transform unit in m_SelectedUnits)
+    //    {
+    //        UnitManager pUnit = unit.gameObject.GetComponent<UnitManager>();
+    //        //pUnit.MoveTo(points[count++], shift.magnitude);
+    //        pUnit.MoveTo(hitPos, 0f);
+    //    }
+    //}
 
     private void GetPointsForSquad(Vector3 targetPosition, out Vector3 squadShiftingVector, out List<Vector3> squadMovePoints)
     {

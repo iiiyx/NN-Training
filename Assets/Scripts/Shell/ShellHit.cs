@@ -5,7 +5,8 @@ public class ShellHit : Shell
     internal override void CheckCollision(Collider other, Vector3 startingPosition)
     {
         if (other.gameObject.layer != LayerMask.NameToLayer("EnemyUnits")
-            && other.gameObject.layer != LayerMask.NameToLayer("Ground"))
+            && other.gameObject.layer != LayerMask.NameToLayer("Ground")
+            || other.gameObject == m_Parent)
         {
             return;
         }
@@ -21,10 +22,5 @@ public class ShellHit : Shell
             ? other.ClosestPoint(startingPosition)
             : transform.position;
         Explode(collisionPosition);
-    }
-
-    private void FixedUpdate()
-    {
-        
     }
 }

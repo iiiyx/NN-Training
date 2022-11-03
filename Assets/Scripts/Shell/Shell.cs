@@ -10,14 +10,9 @@ public abstract class Shell : MonoBehaviour
     public float m_MaxLifeTime = 2f;
     public float m_Damage = 10f;
 
-    protected readonly Vector3 ZERO_VECTOR = Vector3.zero;
     protected Vector3 m_StartingPosition;
-    protected Transform m_TargetTransform;
-    protected BoxCollider m_TargetCollider;
     protected Rigidbody m_RigidBody;
-    protected UnitManager m_TargetManager;
-    protected float m_ShellSpeed0;
-    private bool m_SubscribedToDeath;
+    protected GameObject m_Parent;
 
     private void Awake()
     {
@@ -51,55 +46,15 @@ public abstract class Shell : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected virtual void Aim(BoxCollider targetCollider, float shellSpeed0)
-    {
-        transform.LookAt(targetCollider.bounds.center);
-    }
-
     protected virtual void Launch(float shellSpeed0)
     {
         m_StartingPosition = transform.position;
         m_RigidBody.velocity = shellSpeed0 * transform.forward;
     }
 
-    public void Fire(Transform targetTransform, BoxCollider targetCollider, UnitManager targetManager, float shellSpeed0)
+    public void Fire(float shellSpeed0, GameObject parent)
     {
-        m_TargetTransform = targetTransform;
-        m_TargetCollider = targetCollider;
-        m_ShellSpeed0 = shellSpeed0;
-        m_TargetManager = targetManager;
-
-        m_TargetManager.OnDeath += ClearTarget;
-
-        Aim(targetCollider, shellSpeed0);
+        m_Parent = parent;
         Launch(shellSpeed0);
-    }
-
-    private void ClearTarget(Transform transform)
-    {
-        TryUnsubscribeFromTargetDeath();
-
-        m_TargetTransform = null;
-        m_TargetCollider = null;
-        m_TargetManager = null;
-    }
-
-    private void TryUnsubscribeFromTargetDeath()
-    {
-        if (m_SubscribedToDeath && m_TargetManager)
-        {
-            m_TargetManager.OnDeath -= ClearTarget;
-            m_SubscribedToDeath = false;
-        }
-    }
-
-    private void OnDisable()
-    {
-        TryUnsubscribeFromTargetDeath();
-    }
-
-    private void OnDestroy()
-    {
-        TryUnsubscribeFromTargetDeath();
     }
 }
