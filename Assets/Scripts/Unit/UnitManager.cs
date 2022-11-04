@@ -25,8 +25,8 @@ public class UnitManager : Destroyable
         Vector3 pos = new Vector3(transform.position.x, (m_TerrainBounds.max.y - m_TerrainBounds.min.y)/2, transform.position.z);
         if (!m_IsDead &&
             (!m_TerrainBounds.Contains(pos)
-                || transform.rotation.eulerAngles.x >= 90 && transform.rotation.eulerAngles.x <= 270
-                || transform.rotation.eulerAngles.z >= 90 && transform.rotation.eulerAngles.z <= 270
+                || transform.rotation.eulerAngles.x >= 60 && transform.rotation.eulerAngles.x <= 300
+                || transform.rotation.eulerAngles.z >= 60 && transform.rotation.eulerAngles.z <= 300
             )
         )
         {

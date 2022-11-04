@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitSpawner : MonoBehaviour
 {
     public GameObject m_TankUnitPrefab;
+    public Transform m_SpawnPoint;
 
     [Header("Player Unit Attrs")]
     public int m_PlayerTanksNum = 1;
@@ -35,7 +37,7 @@ public class UnitSpawner : MonoBehaviour
         m_Terrain = Terrain.activeTerrain;
         m_Bounds = m_Terrain.GetComponent<TerrainCollider>().bounds;
         m_PlayerUnitSpawnAttributes = new UnitSpawnAttributes {
-            SpawnPoint = GetRandSpawnPoint(),
+            SpawnPoint = m_SpawnPoint.position,//GetRandSpawnPoint(),
             Layer = m_PlayerUnitLayer,
             Count = m_PlayerTanksNum,
             Material = m_PlayerUnitMaterial,
@@ -44,7 +46,7 @@ public class UnitSpawner : MonoBehaviour
 
         m_EnemyUnitSpawnAttributes = new UnitSpawnAttributes
         {
-            SpawnPoint = GetRandSpawnPoint(),
+            SpawnPoint = m_SpawnPoint.position,// GetRandSpawnPoint(),
             Layer = m_EnemyUnitLayer,
             Count = m_EnemyTanksNum,
             Material = m_EnemyUnitMaterial,
@@ -60,11 +62,23 @@ public class UnitSpawner : MonoBehaviour
             SpawnPlayerUnit(m_TankUnitPrefab);
         }
 
+        //StartCoroutine(SpawnEnemyUnits());
         for (int i = 0; i < m_EnemyTanksNum; i++)
         {
             SpawnEnemyUnit(m_TankUnitPrefab);
-        }
+            //yield return new WaitForSeconds(1f);
 
+        }
+    }
+
+    private IEnumerator SpawnEnemyUnits()
+    {
+        for (int i = 0; i < m_EnemyTanksNum; i++)
+        {
+            SpawnEnemyUnit(m_TankUnitPrefab);
+            yield return new WaitForSeconds(1f);
+
+        }
     }
 
     private void SpawnPlayerUnit(GameObject unitPrefab)
@@ -97,8 +111,8 @@ public class UnitSpawner : MonoBehaviour
 
     private void SpawnUnit(GameObject unitPrefab, UnitSpawnAttributes attrs)
     {
-        float x = Random.Range(-3f, 3f);
-        float y = Random.Range(-3f, 3f);
+        float x = Random.Range(-30f, 30f);
+        float y = Random.Range(-30f, 30f);
         GameObject unit = Instantiate(unitPrefab, attrs.SpawnPoint + (Vector3.right * x) + (Vector3.forward * y), GetSpawnRotation(attrs.SpawnPoint));
         SetupUnit(unit, attrs.Material.color, attrs.Layer.LayerIndex);
         attrs.UnitsCollection.Add(unit);
