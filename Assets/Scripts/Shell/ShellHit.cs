@@ -18,9 +18,12 @@ public class ShellHit : Shell
             targetManager.Damage(m_Damage);
         }
 
-        Vector3 collisionPosition = other.gameObject.layer == LayerMask.NameToLayer("EnemyUnits")
-            ? other.ClosestPoint(startingPosition)
-            : transform.position;
+        Vector3 collisionPosition = transform.position;
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyUnits"))
+        {
+            collisionPosition = other.ClosestPoint(startingPosition);
+            collisionPosition.y = transform.position.y;
+        }
         Explode(collisionPosition);
     }
 }

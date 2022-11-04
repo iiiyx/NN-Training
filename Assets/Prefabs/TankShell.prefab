@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ExplosionParticles: {fileID: 5626172292610517401}
+  m_DustParticles: {fileID: 2952919013536942130}
   m_ExplosionAudio: {fileID: 3292754894907893631}
   m_MaxLifeTime: 10
   m_Damage: 10
@@ -254,6 +255,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
+--- !u!198 &2952919013536942130 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19895962, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
+  m_PrefabInstance: {fileID: 2952919013555068584}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2952919013555293642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 496482, guid: f7167ad2844254441b40b8a300b4f1fe, type: 3}
