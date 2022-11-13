@@ -40,7 +40,7 @@ public abstract class UnitDeath : MonoBehaviour, IKillable
         m_ExplosionParticles.Play();
         m_ExplosionAudio.Play();
 
-        Destroy(m_ExplosionParticles.gameObject, Mathf.Max(m_ExplosionParticles.main.duration, m_ExplosionAudio.clip.length));
+        Destroy(m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
 
         Ghostify();
 

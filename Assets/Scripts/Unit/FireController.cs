@@ -12,7 +12,6 @@ public class FireController : MonoBehaviour
     public Shell m_Shell;
     public Transform m_FireTransform;
     public AudioSource m_ShootingAudio;
-    public AudioSource m_MovingAudio;
 
 
     private bool m_Fired;
@@ -23,7 +22,7 @@ public class FireController : MonoBehaviour
         m_WaitForReloading = new WaitForSeconds(m_FireReloadingTime);
     }
 
-    private void Fire()
+    internal void Fire()
     {
         if (m_Fired)
         {
@@ -42,7 +41,10 @@ public class FireController : MonoBehaviour
         Shell shell = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation);
         shell.Fire(m_ShellSpeed0, gameObject);
 
-        m_ShootingAudio.Play();
+        if (m_ShootingAudio.isActiveAndEnabled)
+        {
+            m_ShootingAudio.Play();
+        }
 
         yield return ReloadFire();
     }
@@ -62,8 +64,13 @@ public class FireController : MonoBehaviour
 
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         HandleInput();
+    }
+
+    internal bool CanFire()
+    {
+        return !m_Fired;
     }
 }

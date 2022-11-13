@@ -9,10 +9,13 @@ public class MoveController : MonoBehaviour
         frontLeftW2, rearLeftW2, middleLeftW2,
         frontRightW2, rearRightW2, middleRightW2;
 
+    public Transform turretTransform;
+
 
     public float motorForce = 50f;
     public float maxSteerAngle = 30f;
     public float maxSpeed = 25f;
+    public float turnSpeed = 100f;
 
     private List<WheelCollider> allWheels;
     private List<WheelCollider> rightWheels;
@@ -46,9 +49,16 @@ public class MoveController : MonoBehaviour
         Accelerate(x, y);
     }
 
-    private void Accelerate(int x, int y)
+    internal void TurnTurret(int turretTurnH)
     {
-        Debug.Log(string.Format("{0}, {1}", x, y));
+        if (turretTurnH != 0)
+        {
+            turretTransform.Rotate(Vector3.up * Time.deltaTime * turretTurnH * turnSpeed, Space.Self);
+        }
+    }
+
+    internal void Accelerate(int x, int y)
+    {
         if (x == 0 && y == 1)
         {
             // fwd
@@ -159,9 +169,9 @@ public class MoveController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
-        HandleInput();
+        //HandleInput();
         UpdateWheelPoses();
         LimitSpeed();
     }

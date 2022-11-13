@@ -636,7 +636,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1804805151
 Transform:
   m_ObjectHideFlags: 0
@@ -1162,7 +1162,7 @@ GameObject:
   - component: {fileID: 1235509126}
   m_Layer: 11
   m_Name: TankUnit
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1430,11 +1430,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0339c87b7bd4da42bef45b069b730b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartingHealth: 100
-  m_MaxHealth: 100
+  m_StartingHealth: 20
+  m_MaxHealth: 20
   m_UnitDeath: {fileID: 3739282062516932814}
   m_UnitHealth: {fileID: 6879574089785717239}
   m_ExplosionEffectsTime: 2
+  m_ControlAngles: 0
 --- !u!114 &7919785316966527366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,7 +1449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AttackRange: 70
-  m_MoveSpeed: 25
+  m_MoveSpeed: 3
   m_TurnSpeed: 100
   m_ShellSpeed0: 500
   m_FireReloadingTime: 2
@@ -1506,7 +1507,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699369731980525061}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f36f2d19f431db34d8e2897084eff91d, type: 3}
   m_Name: 
@@ -1523,9 +1524,11 @@ MonoBehaviour:
   frontRightW2: {fileID: 188431994}
   rearRightW2: {fileID: 2071454539}
   middleRightW2: {fileID: 1073313084}
+  turretTransform: {fileID: 0}
   motorForce: 8500
   maxSteerAngle: 12
   maxSpeed: 4
+  turnSpeed: 100
 --- !u!65 &1235509127
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1546,7 +1549,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699369731980525061}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 586006ddf1bafbf479d1326e33da244f, type: 3}
   m_Name: 
@@ -1557,7 +1560,6 @@ MonoBehaviour:
   m_Shell: {fileID: 4028423943702809506, guid: 99ec3ca9e7054634c81992c927e5bbc9, type: 3}
   m_FireTransform: {fileID: 4218432314237711029}
   m_ShootingAudio: {fileID: 5911986580331432861}
-  m_MovingAudio: {fileID: 1699369732556899927}
 --- !u!1 &1699369731980525063
 GameObject:
   m_ObjectHideFlags: 0

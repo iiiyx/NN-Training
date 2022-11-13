@@ -36,6 +36,7 @@ public abstract class UnitControl : MonoBehaviour
     private bool m_SubscribedToTargetDeath;
     public float m_StoppingDistance = 4f;
     //private readonly List<GameObject> currentCollisions = new List<GameObject>();
+    private Terrain terrain;
 
     public float m_RemainingDistance {
         get {
@@ -56,6 +57,7 @@ public abstract class UnitControl : MonoBehaviour
     protected virtual void Awake()
     {
         m_WaitForReloading = new WaitForSeconds(m_FireReloadingTime);
+        terrain = GetComponentInParent<Terrain>();
     }
 
     private void Start()
@@ -93,6 +95,7 @@ public abstract class UnitControl : MonoBehaviour
         if (LookAt(m_MovePosition))
         {
             var p = Vector3.MoveTowards(transform.position, m_MovePosition, m_MoveSpeed);
+            p.Set(p.x, terrain.SampleHeight(p), p.z);
             transform.position = Vector3.Lerp(transform.position, p, Time.deltaTime);
         }
     }
@@ -204,7 +207,7 @@ public abstract class UnitControl : MonoBehaviour
         m_StoppingDistance = 4f;
     }
 
-    private void Update1()
+    private void Update()
     {
         if (m_IsMoving)
         {

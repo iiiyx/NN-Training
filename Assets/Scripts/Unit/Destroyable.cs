@@ -45,7 +45,7 @@ public class Destroyable : MonoBehaviour, IDamagable, IKillable
         m_UnitDeath.Kill();
     }
 
-    public void Damage(float amount)
+    public bool Damage(float amount)
     {
         m_CurrentHelath -= amount;
         m_UnitHealth.SetHealth(m_CurrentHelath);
@@ -53,7 +53,9 @@ public class Destroyable : MonoBehaviour, IDamagable, IKillable
         if (m_CurrentHelath <= 0f)
         {
             Kill();
+            return true;
         }
+        return false;
     }
 
     private void OnMouseEnter()

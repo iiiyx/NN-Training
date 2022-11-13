@@ -1,0 +1,27 @@
+behaviors:
+  TankAI:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 64
+      buffer_size: 192000
+      learning_rate: 0.00003
+      learning_rate_schedule: linear
+      # buffer_init_steps: 2000
+      # init_entcoef: 0.5
+    network_settings:
+      normalize: False
+      hidden_units: 256
+      num_layers: 2
+      vis_encode_type: fully_connected
+      conditioning_type: hyper
+      # deterministic: False
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    keep_checkpoints: 5
+    checkpoint_interval: 50000
+    max_steps: 5000000000
+    time_horizon: 64
+    summary_freq: 50000
+    threaded: False

@@ -16,9 +16,12 @@ public abstract class Shell : MonoBehaviour
     protected Rigidbody m_RigidBody;
     protected GameObject m_Parent;
 
+    protected bool exploded;
+
     private void Awake()
     {
         m_RigidBody = GetComponent<Rigidbody>();
+        exploded = false;
     }
 
     private void Start()
@@ -38,19 +41,31 @@ public abstract class Shell : MonoBehaviour
 
     protected void Explode(Vector3 position, Vector3 shift)
     {
+        exploded = true;
+
         Vector3 pos = new Vector3(position.x, Mathf.Max(0f, position.y), position.z) + shift;
-        
-        m_DustParticles.transform.parent = null;
-        m_DustParticles.transform.position = pos;
 
-        m_ExplosionParticles.transform.parent = null;
-        m_ExplosionParticles.transform.position = pos;
+        if (m_DustParticles.gameObject.activeSelf)
+        {
+            m_DustParticles.transform.parent = null;
+            m_DustParticles.transform.position = pos;
+            Destroy(m_DustParticles.gameObject, m_DustParticles.main.duration);
+        }
 
-        m_ExplosionParticles.Play();
-        m_ExplosionAudio.Play();
+        if (m_ExplosionParticles.gameObject.activeSelf)
+        {
+            m_ExplosionParticles.transform.parent = null;
+            m_ExplosionParticles.transform.position = pos;
 
-        Destroy(m_DustParticles.gameObject, m_DustParticles.main.duration);
-        Destroy(m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
+            m_ExplosionParticles.Play();
+            Destroy(m_ExplosionParticles.gameObject, m_ExplosionParticles.main.duration);
+        }
+
+        if (m_ExplosionAudio.isActiveAndEnabled)
+        {
+            m_ExplosionAudio.Play();
+        }
+
         Destroy(gameObject);
     }
 
@@ -64,5 +79,19 @@ public abstract class Shell : MonoBehaviour
     {
         m_Parent = parent;
         Launch(shellSpeed0);
+    }
+
+    protected void SendReward(bool killed)
+    {
+        TankAIAgent agent;
+        if (m_Parent.TryGetComponent<TankAIAgent>(out agent))
+        {
+            agent.AddReward(10f);
+            if (killed)
+            {
+                agent.AddReward(20f);
+                agent.EndEpisode();
+            }
+        }
     }
 }

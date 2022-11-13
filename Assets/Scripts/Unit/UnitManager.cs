@@ -3,6 +3,7 @@
 public class UnitManager : Destroyable
 {
     public float m_ExplosionEffectsTime = 2f;
+    public bool m_ControlAngles = false;
 
     private Bounds m_TerrainBounds;
     private Rigidbody m_RigidBody;
@@ -10,12 +11,12 @@ public class UnitManager : Destroyable
 
     private void Start()
     {
-        m_TerrainBounds = GameObject.FindGameObjectWithTag("Terrain").GetComponent<TerrainCollider>().bounds;
+        m_TerrainBounds = GetComponentInParent<Terrain>().GetComponent<TerrainCollider>().bounds;
         m_RigidBody = GetComponent<Rigidbody>();
         m_RigidBody.centerOfMass = new Vector3(0, 0f, 0);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         m_FrameCounter++;
         if (m_FrameCounter < 20)
@@ -23,7 +24,7 @@ public class UnitManager : Destroyable
             return;
         }
         Vector3 pos = new Vector3(transform.position.x, (m_TerrainBounds.max.y - m_TerrainBounds.min.y)/2, transform.position.z);
-        if (!m_IsDead &&
+        if (!m_IsDead && m_ControlAngles &&
             (!m_TerrainBounds.Contains(pos)
                 || transform.rotation.eulerAngles.x >= 60 && transform.rotation.eulerAngles.x <= 300
                 || transform.rotation.eulerAngles.z >= 60 && transform.rotation.eulerAngles.z <= 300
@@ -31,6 +32,12 @@ public class UnitManager : Destroyable
         )
         {
             Kill();
+            TankAIAgent agent;
+            if (TryGetComponent<TankAIAgent>(out agent) && agent.isActiveAndEnabled)
+            {
+                agent.SetReward(-1f);
+                agent.EndEpisode();
+            }
         }
         
         m_FrameCounter = 0;

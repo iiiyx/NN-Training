@@ -4,8 +4,10 @@ public class ShellHit : Shell
 {
     internal override void CheckCollision(Collider other, Vector3 startingPosition)
     {
-        if (other.gameObject.layer != LayerMask.NameToLayer("EnemyUnits")
+        if (exploded
+            || other.gameObject.layer != LayerMask.NameToLayer("EnemyUnits")
             && other.gameObject.layer != LayerMask.NameToLayer("Ground")
+            && other.gameObject.layer != LayerMask.NameToLayer("Borders")
             || other.gameObject == m_Parent)
         {
             return;
@@ -15,7 +17,7 @@ public class ShellHit : Shell
 
         if (targetManager != null)
         {
-            targetManager.Damage(m_Damage);
+            SendReward(targetManager.Damage(m_Damage));
         }
 
         Vector3 collisionPosition = transform.position;

@@ -10,22 +10,25 @@ public class Patrol : MonoBehaviour
 
     List<Vector3> points = new List<Vector3>()
     {
-        new Vector3(150.2f, 0.00f, 133.3f),
-        new Vector3(215.4f, 0.00f, 313.1f),
-        new Vector3(233.3f, 0.00f, 458.1f),
-        new Vector3(313.4f, 0.00f, 436.4f),
-        new Vector3(384.8f, 0.00f, 282.2f),
-        new Vector3(464.5f, 0.00f, 258.5f),
-        new Vector3(333.5f, 0.00f, 194.5f)
+        new Vector3(11.7f, 0.00f, 12.2f),
+        new Vector3(33.5f, 0.00f, 40.8f),
+        new Vector3(10.4f, 0.00f, 87.9f),
+        new Vector3(18.9f, 0.00f, 126.2f),
+        new Vector3(58.7f, 0.00f, 105.9f),
+        new Vector3(112.8f, 0.00f, 107.7f),
+        new Vector3(119.7f, 0.00f, 69.6f),
+        new Vector3(62.6f, 0.00f, 43.1f),
+        new Vector3(43.5f, 0.00f, 36.9f),
+        new Vector3(123f, 0.00f, 11.4f),
     };
     private int counter = 0;
     private UnitControl m_Unit;
     private bool m_IsStopped;
     private bool m_UnitStopped;
 
-    private void Start()
+    private void Awake()
     {
-        var terrain = Terrain.activeTerrain;
+        var terrain = GetComponentInParent<Terrain>();
         var bounds = terrain.GetComponent<TerrainCollider>().bounds;
 
         points = points.Select(p => new Vector3(p.x, terrain.SampleHeight(p), p.z)).ToList();
