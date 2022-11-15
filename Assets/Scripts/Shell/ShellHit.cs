@@ -19,6 +19,10 @@ public class ShellHit : Shell
         {
             SendReward(targetManager.Damage(m_Damage));
         }
+        //else
+        //{
+        //    SendNegativeReward();
+        //}
 
         Vector3 collisionPosition = transform.position;
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyUnits"))

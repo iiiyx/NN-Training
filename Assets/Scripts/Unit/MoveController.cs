@@ -118,7 +118,7 @@ public class MoveController : MonoBehaviour
             if (dir == 0)
             {
                 w.motorTorque = 0;
-                w.brakeTorque = motorForce * 2;
+                w.brakeTorque = motorForce * 1;
                 return;
             }
             w.brakeTorque = 0;

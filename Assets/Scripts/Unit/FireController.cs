@@ -66,7 +66,7 @@ public class FireController : MonoBehaviour
 
     private void LateUpdate()
     {
-        HandleInput();
+        //HandleInput();
     }
 
     internal bool CanFire()

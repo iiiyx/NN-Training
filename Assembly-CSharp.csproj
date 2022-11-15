@@ -83,6 +83,10 @@
     <Compile Include="Assets\Scripts\Unit\FireController.cs" />
     <Compile Include="Assets\Scripts\Unit\Destroyable.cs" />
     <Compile Include="Assets\Scripts\Managers\SelectionManager.cs" />
+    <Compile Include="Assets\Scripts\AI\AIManager.cs" />
+    <Compile Include="Assets\Scripts\AI\TankNN.cs" />
+    <Compile Include="Assets\Scripts\AI\Neuron.cs" />
+    <Compile Include="Assets\Scripts\AI\TankNNAgent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

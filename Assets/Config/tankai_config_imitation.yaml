@@ -23,12 +23,12 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-      gail:
-        strength: 0.5
-        demo_path: Assets/ML-Demos/TankAIDemo2.demo
-    behavioral_cloning:
-      strength: 0.5
-      demo_path: Assets/ML-Demos/TankAIDemo2.demo
+    #   gail:
+    #     strength: 0.5
+    #     demo_path: Assets/ML-Demos/TankAIDemo2.demo
+    # behavioral_cloning:
+    #   strength: 0.5
+    #   demo_path: Assets/ML-Demos/TankAIDemo2.demo
     keep_checkpoints: 5
     checkpoint_interval: 50000
     max_steps: 5000000000

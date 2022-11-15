@@ -29,6 +29,14 @@ public abstract class Shell : MonoBehaviour
         Destroy(gameObject, m_MaxLifeTime);
     }
 
+    //private void OnDestroy()
+    //{
+    //    if (!exploded)
+    //    {
+    //        SendNegativeReward();
+    //    }
+    //}
+
     private void OnTriggerEnter(Collider other)
     {
         CheckCollision(other, m_StartingPosition);
@@ -83,15 +91,22 @@ public abstract class Shell : MonoBehaviour
 
     protected void SendReward(bool killed)
     {
-        TankAIAgent agent;
-        if (m_Parent.TryGetComponent<TankAIAgent>(out agent))
+        if (m_Parent.TryGetComponent(out TankAIAgent agent))
         {
-            agent.AddReward(10f);
+            agent.AddReward(0.3f);
             if (killed)
             {
-                agent.AddReward(20f);
+                agent.SetReward(1f);
                 agent.EndEpisode();
             }
+        }
+    }
+
+    protected void SendNegativeReward()
+    {
+        if (m_Parent.TryGetComponent(out TankAIAgent agent))
+        {
+            agent.AddReward(-0.01f);
         }
     }
 }

@@ -19,7 +19,7 @@ public abstract class UnitDeath : MonoBehaviour, IKillable
 
     protected virtual void Awake()
     {
-        m_ExplosionParticles = Instantiate(m_ExplosionPrefab).GetComponent<ParticleSystem>();
+        m_ExplosionParticles = Instantiate(m_ExplosionPrefab, transform).GetComponent<ParticleSystem>();
         m_ExplosionParticles.gameObject.SetActive(false);
         m_ExplosionAudio = m_ExplosionParticles.GetComponent<AudioSource>();
     }
@@ -79,5 +79,11 @@ public abstract class UnitDeath : MonoBehaviour, IKillable
         yield return m_DeathWait;
         gameObject.SetActive(false);
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        //Destroy(m_ExplosionParticles);
+        //Debug.Log(transform);
     }
 }
